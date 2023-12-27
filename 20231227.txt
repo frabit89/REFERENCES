@@ -1,0 +1,43 @@
+oracle db 18c EX 설치
+
+dbstudy 폴더 생성
+1. 내부에 git init 
+2. git hub에서 dbstudy repository 만듦
+https://github.com/frabit89/dbstudy.git
+3. git remote add origin https://github.com/frabit89/dbstudy.git
+
+cmd
+1. sys as sysdba -> 현재 쓰는 db 버전 보여줌
+2. show user;
+3. conn
+
+sql developer 설치
+
+불러들일 것 있는지 물음에 아니오 누른 후 계속 설치
+
+시작 시 표시 해제
+녹색 +버튼이나 Oracle 접속 오른쪽 클릭으로 새접속
+Name은 마음대로 (locahose_SYS)
+사용자 이름: SYS
+비밀번호: 1111
+롤:SYSDBA
+테스트 후 접속
+
+환경설정-> 환경 -> 인코딩 -> UTF-8(한글 최적화)
+	 코드편집기 -> 행 여백 -> 행 번호 표시
+sql 워크시트 누르면 작업하던 시트 선택 가능
+우측상단에 보이는 계정으로 실행
+
+SQLQuery에서 공통계정 앞에 c## 키워드를 붙이는 네이밍 규칙이 생김 
+ ---c##(계정이름)---
+ALTER SESSION SET " _ORACLE_SCRIPT" = TRUE;
+	C## 제거 스크립트
+
+char(5)		varchar2(5)
+'abc'	==	'abc'		?
+같지 않음
+
+char는'abc_ _' (공백 두개를 더 넣어서 5칸을 맞춤)
+varchar는 가변이라 'abc' 칸으로 끝
+
+
