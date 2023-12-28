@@ -1,0 +1,164 @@
+/*
+    DDL
+    1. Data Definition Language
+    2. 데이타 정의어
+    3. 데이터베이스 객체를 다루는 언어이다.
+    4. 종류
+        1) CREATE   : 생성
+        2) ALTER    : 수정
+        3) DROP     : 삭제(완전 삭제)
+        4) TRUNCATE : 삭제(내용만 삭제)
+*/
+
+BANK_T와 CUSTOMER_T 테이블 생성
+(PPT 09.DDL활용의 8쪽)
+**CONSTRAINT 활용하기
+
+/*
+    테이블 수정하기
+    1. 칼럼 추가하기      : ALTER TABLE 테이블명 ADD        칼럼명 데이터타입 제약조건
+    2. 칼럼 수정하기      : ALTER TABLE 테이블명 MODIFY     칼럼명 데이터타입 제약조건
+    3. 칼럼 삭제하기      : ALTER TABLE 테이블명 DROP COLUMN 칼럼명
+    4. 칼럼 이름 바꾸기   : ALTER TABLE 테이블명 RENAME COLUMN 기존칼럼명 TO 신규칼럼명
+    5. 테이블 이름 바꾸기 : ALTER TABLE 테이블명 RENAME TO 신규테이블명
+*/
+
+--1. BANK_T에 연락처(BANK_TEL) 칼럼을 추가하시오.
+--2. BANK_T의 은행명(BANK_NAME) 칼럼을 VARCHAR2(15 BYTE)로 바꾸고 필수 제약조건을 지정하시오.
+--3. CUSTOMER_T의 나이(CUST_AGE) 칼럼을 삭제하시오.
+--4. CUSTOMER_T의 연락처(CUST_PHONE) 칼럼명을 CUST_TEL로 수정하시오.
+--5. CUSTOMER_T에 등급(GRADE) 칼럼을 추가하시오. 'VIP', 'GOLD', 'SILVER', 'BRONZE' 중 하나의 값을 가지도록설정하시오.
+--6. CUSTOMER_T의 고객명(CUST_NAME) 칼럼의 필수 제약조건을 없애시오.
+--7. CUSTOMER_T의 테이블명을 CUST_T로 수정하시오.
+
+
+/*
+    테이블 수정하기 - PK/FK 제약조건
+    
+    1. PK
+        1) 추가 : ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 PRIMARY KEY (칼럼명)
+        2) 삭제  
+            (1) ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명 
+            (2) ALTER TABLE 테이블명 DROP PRIMARY KEY 
+    
+    2. FK
+        1)추가        : ALTER TABLE 자식테이블명 ADD CONSTRAINT 제약조건명 FOREIGN KEY(칼럼명) REFERENCES 부모테이블 (참조할 칼럼명) [옵션]
+        2)삭제        : ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건명
+        3)비활성화    : ALTER TABLE 테이블명 DISABLE CONSTRAINT 제약조건명
+        4)활성화      : ALTER TABLE 테이블명 ENABLE CONSTRAINT 제약조건명
+*/
+
+--FK_CUSTOMER_BANK 제약조건을 비활성화하시오.
+--FK_CUSTOMER_BANK 제약조건을 활성화하시오.
+
+-------------------------------------------------------------------------------------
+
+/*
+    DML
+    1. Data Manipulation Language
+    2. 데이터 조작어
+    3. 데이터(행, Row)
+    4. 트랜잭션 처리가 필요하다.
+    5. 종류
+        1) 행 삽입 : INSERT INTO VALUES
+        2) 행 수정 : UPDATE SET WHERE
+        3) 행 삭제 : DELETE FROM WHERE
+*/
+/*
+    트랜잭션
+    1. 한 번에 수행해야 하는 작업을 의미한다. (원자성, All or Nothing)
+    2. 2가지 이상의 작업이 하나의 트랜잭션으로 구성된다.
+    3. 작업의 저장을 의미하는 COMMIT과 작업의 취소를 의미하는 ROLLBACK이 필요하다.
+    4. 예시 : 은행 이체 (반드시 동시에 시행되어야 함, 같이 시행되거나 같이 취소되어야 함)
+        1) 내 통장에서 돈 빼기
+        2) 너 통장으로 돈 넣기
+*/
+/*
+    시퀀스
+    1. 일련번호를 생성하는 데이터베이스 객체이다.
+    2. 주로 기본키의 값을 생성할 때 사용한다.
+    3. 함수
+        1) 새 번호 생성하기 : NEXTVAL
+        2) 현재 번호 확인하기 : CURRVAL
+*/
+
+PPT DML 10쪽 테이블 생성
+
+--부서 테이블의 부서 번호를 생성하는 시퀀스 만들기(DEFAULT값, 생략 가능한 값)
+--사원 테이블의 사원번호를 생성하는 시퀀스 만들기
+/*
+    수정
+    
+    UPDATE 테이블명 SET 업데이트할내용, ... WHERE 조건식 
+*/
+
+--1. DEPARTMENT_T에서 부서번호(DEPT_NO)가 3인 부서의 지역(LOCATION)을 '인천'으로 수정하시오.
+ --2. EMPLOYEE_T에서 부서번호(DEPART)가 2인 부서의 사원들의 기본급(SALARY)을 10% 인상하시오.
+
+/*
+    삭제
+    
+    DELETE FROM 테이블명 WHERE 조건식
+*/
+
+--1. DEPARTMENT_T에서 부서번호(DEPT_NO)가 3인 부서를 삭제하시오. (부서번호가 3인 사원은 없다. 참조 무결성에 영향을 미치지 않는다.)
+--2. EMPLOYEE_T에서 부서번호(DEPART)가 1과 4인 사원을 삭제하시오.
+--3. DEPARTMENT_T에서 부서번호(DEPT_NO)가 2인 부서를 삭제하시오.(부서번호가 2인 사원이 있다. 부서가 없어지면 사원 정보가 참조 무결성에 위배된다. 참조 무결성에 대비해서 ON DELETE SET NULL 옵션을 주었으므로 사원 테이블의 부서번호가 NULL로 함께 수정된다.)
+
+
+-------------------------------------------------------------------------------------
+
+
+/*
+    DQL
+    1. Data Query Language
+    2. 데이터 조회어
+    3. 데이터(행, Row)를 조회할 때 사용한다.
+    4. DQL을 실행해도 데이터베이스에 변화는 발생하지 않는다.
+    5. 형식
+        SELECT 조회할칼럼, 조회할칼럼, ...
+          FROM 테이블명
+         WHERE 조건식
+         GROUP BY 그룹화할칼럼, 그룹화할칼럼, ...
+        HAVING 그룹조건식
+         ORDER BY 정렬할칼럼 ASC|DESC, 정렬할칼럼 ASC|DESC, ...
+*/
+
+
+--1. 부서 테이블의 모든 칼럼을 조회하시오.
+--2. 부서 테이블의 모든 칼럼을 조회하시오. 조회할 칼럼명을 '부서번호', '부서명', '위치'로  지정 AS하시오.
+--3. 부서 테이블의 위치 칼럼을 중복을 제거DISTINCT하여 조회하시오.
+ /*
+    주요 조건식 작성 방법
+    1. 칼럼 = 값
+    2. 칼럼 BETWEEN 값1 AND 값2
+    3. 칼럼 IN(값1, 값2)
+    4. 칼럼 IS NULL
+    5. 칼럼 IS NOT NULL
+    6. 칼럼 LIKE 값
+ */
+
+--4. 부서 테이블에서 부서번호가 1인 부서 정보를 조회하시오.
+--5. 부서 테이블에서 지역이 '서울'인 부서 정보를 조회하시오.
+--6. 사원 테이블에서 기본급이 3000000 이상인 사원을 조회하시오.
+--7. 사원 테이블에서 기본급이 2000000 ~ 3000000 인 사원을 조회하시오.
+--8. 사원 테이블에서 직급이 '사원','과장'인 사원을 조회하시오.
+ /*
+    LIKE 연산자와 와일드 카드(WILD CARD)
+    1. 만능 문자를 의미한다.
+    2. 종류
+        1) % : 글자수에 상관 없는 만능문자
+        2) _ : 1글자를 의미하는 만능문자
+    3. 예시)
+        1) 첫 번째 글자가 A인 모든 데이터: A%
+        2) 두 번째 글자가 A인 모든 데이터: _A%
+        3) 마지막 글자가 A인  모든 데이터: %A
+        4) A를 포함하는       모든 데이터: %A%
+ */
+ /*
+    LIKE 연산자
+    와일드 카드를 이용해서 조회할 때 사용하는 연산자 
+ */
+
+-- 9.사원 테이블에서 '한'씨를 조회하시오.
+--10. 사원 테이블에서 9월달에 입사한 사원을 조회하시오.
